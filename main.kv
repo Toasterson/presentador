@@ -1,0 +1,38 @@
+#: import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:kivy 1.1.0
+
+ScreenManagement:
+    transition: SlideTransition()
+    MainScreen:
+    FileSelector:
+
+<MainScreen>:
+    name: "main"
+    FloatLayout:
+        Button:
+            text: 'Open Presentation'
+            pos: 0,0
+            font_size: 40
+            on_release: app.root.current = "file_select"
+
+<FileSelector>:
+    name: "file_select"
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserIconView:
+            id: filechooser
+            #filters: ['*.ppt', '*.pptx', '*.odp']
+            filters: ['*.odp']
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: app.root.current = "main"
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
